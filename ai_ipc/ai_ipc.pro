@@ -32,11 +32,13 @@ LIBS += -L$$PWD/3party/opencv32 -lopencv_world \
 SOURCES += src/main.cpp\
         src/mainwindow.cpp \
     src/camera.cpp \
-    src/clsdnn.cpp
+    src/clsdnn.cpp \
+    src/clscaffe.cpp
 
 HEADERS  += src/mainwindow.h \
     src/camera.h \
-    src/clsdnn.h
+    src/clsdnn.h \
+    src/clscaffe.h
 
 FORMS    += src/mainwindow.ui
 

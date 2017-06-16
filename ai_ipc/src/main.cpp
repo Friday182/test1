@@ -11,6 +11,7 @@
 //#include "classifier.h"
 #include "camera.h"
 #include "clsdnn.h"
+#include "clscaffe.h"
 
 int main(int argc, char *argv[])
 {
@@ -20,6 +21,7 @@ int main(int argc, char *argv[])
     camera          newCam;
     //classifier      cls;
     clsdnn          dnn;
+    clscaffe        cnn;
 
     QApplication::addLibraryPath("./imageformats");
 
@@ -32,6 +34,9 @@ int main(int argc, char *argv[])
     // Function: newCam thread send captured imgage to DNN model every 1000 ms
     QObject::connect(&newCam, SIGNAL(imgReady1000msSig()), &dnn, SLOT(inputImgReadySlot()));
 
+    // Function: newCam thread send captured imgage to CNN model every 1000 ms
+    QObject::connect(&newCam, SIGNAL(imgReady1000msSig()), &cnn, SLOT(inImgSlot()));
+
     // Function: newCam thread send captured imgage to GUI for display purpose every 500 ms
     QObject::connect(&newCam, SIGNAL(imgReady500msSig()), &w, SLOT(displayImgSlot()));
 
@@ -43,6 +48,9 @@ int main(int argc, char *argv[])
 
     // Function: dnn classifier send predict result to GUI for display
     QObject::connect(&dnn, SIGNAL(dnnResultSig( int, int )), &w, SLOT(getPredictResultSlot(int, int)));
+
+    // Function: dnn classifier send predict result to GUI for display
+    QObject::connect(&cnn, SIGNAL(cnnResultSig( int, int )), &w, SLOT(getPredictResultSlot(int, int)));
 
     // Function: classifier send predict result to other threads
     //QObject::connect(&cls, SIGNAL(finishPredictSig( int, int )), &w, SLOT(getPredictResult(int, int)));

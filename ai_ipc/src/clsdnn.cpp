@@ -11,8 +11,8 @@ using namespace cv::dnn;
 using namespace std;
 
 const string modelFile = "../ai_ipc/3party/caffe/Model/googlenet_train_val.prototxt";
-//const string trainedFile = "../ai_ipc/3party/caffe/Model/ajguard.caffemodel";
-const string trainedFile = "../ai_ipc/3party/caffe/Model/bvlc_googlenet.caffemodel";
+const string trainedFile = "../ai_ipc/3party/caffe/Model/ajguard.caffemodel";
+//const string trainedFile = "../ai_ipc/3party/caffe/Model/bvlc_googlenet.caffemodel";
 //const string modelFile = "../ai_ipc/3party/caffe/model_hands/submitnet.prototxt";
 //const string trainedFile = "../ai_ipc/3party/caffe/model_hands/1miohandsv2.caffemodel";
 

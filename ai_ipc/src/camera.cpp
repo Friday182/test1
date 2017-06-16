@@ -7,6 +7,7 @@
 #define COUNT_100MS         (100/FPS_MS)
 #define COUNT_500MS         (500/FPS_MS)
 #define COUNT_1000MS        (1000/FPS_MS)
+#define COUNT_3000MS        (3000/FPS_MS)
 
 using namespace cv;
 
@@ -89,7 +90,7 @@ void camera::camTimer25msSlot( void )
             counter500ms = 0;
         }
 
-        if( counter1000ms >= COUNT_1000MS )
+        if( counter1000ms >= COUNT_3000MS )
         {
             //calTime->restart();
             cvSaveImage("../ai_ipc/test/test1000.jpg", img, 0);
