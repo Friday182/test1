@@ -25,8 +25,9 @@ public slots:
     void imgProcFinishSlot( int code );
 
 private:
-    QTime *calTime;
-    QProcess *imgProcess;
+    QTime       *calTime;
+    QProcess    *imgProcess;
+    QPixmap      *inImg;
 };
 
 #endif // CLSCAFFE_H

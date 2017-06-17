@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
     QObject::connect(&dnn, SIGNAL(dnnResultSig( int, int )), &w, SLOT(getPredictResultSlot(int, int)));
 
     // Function: dnn classifier send predict result to GUI for display
-    QObject::connect(&cnn, SIGNAL(cnnResultSig( int, int )), &w, SLOT(getPredictResultSlot(int, int)));
+    //QObject::connect(&cnn, SIGNAL(cnnResultSig( int, int )), &w, SLOT(getPredictResultSlot(int, int)));
 
     // Function: classifier send predict result to other threads
     //QObject::connect(&cls, SIGNAL(finishPredictSig( int, int )), &w, SLOT(getPredictResult(int, int)));
@@ -76,6 +76,13 @@ int main(int argc, char *argv[])
     dnn.moveToThread( workerDnn );
     workerDnn->start();
     workerDnn->setPriority( QThread::HighPriority );
+
+    QThread *workerCnn = new QThread();
+    // Function: init cnn module when thread start
+    QObject::connect(workerCnn, SIGNAL(started()), &cnn, SLOT(cnnCaffeInitSlot()));
+    cnn.moveToThread( workerCnn );
+    workerCnn->start();
+    workerCnn->setPriority( QThread::HighPriority );
 
     w.show();
 

@@ -1,8 +1,13 @@
 #include "clscaffe.h"
 #include <QDebug>
 
-const QString caffeBin = ".../ai_ipc/3party/caffe/bin/classification.bin ";
-const QString param = "../ai_ipc/3party/caffe/modelbin/deploy.prototxt ../ai_ipc/3party/caffe/modelbin/ajguard.caffemodel ../ai_ipc/3party/caffe/modelbin/mean.binaryproto ../ai_ipc/3party/caffe/modelbin/labels.txt ../ai_ipc/test/temp.jpg";
+//const QString caffeBin = "../ai_ipc/3party/caffe/bin/classification.bin ";
+//const QString param = "../ai_ipc/3party/caffe/modelbin/deploy.prototxt ../ai_ipc/3party/caffe/modelbin/ajguard.caffemodel ../ai_ipc/3party/caffe/modelbin/mean.binaryproto ../ai_ipc/3party/caffe/modelbin/labels.txt ../ai_ipc/test/temp.jpg";
+
+
+const QString caffeBin = "../ai_ipc/3party/caffe/bin/classification.bin ";
+const QString param = "../ai_ipc/3party/caffe/alexmodel/deploy.prototxt ../ai_ipc/3party/caffe/alexmodel/ajguard.caffemodel ../ai_ipc/3party/caffe/alexmodel/mean.binaryproto ../ai_ipc/3party/caffe/alexmodel/labels.txt ../ai_ipc/test/temp.jpg";
+
 const QString inImgPath = "../ai_ipc/test/test1000.jpg";
 const QString tmpImgPath = "../ai_ipc/test/temp.jpg";
 
@@ -14,8 +19,9 @@ clscaffe::clscaffe(QObject *parent) : QObject(parent)
 
 void clscaffe::cnnCaffeInitSlot()
 {
-    calTime = new QTime();
-    imgProcess = new QProcess( this );
+    calTime     = new QTime();
+    imgProcess  = new QProcess( this );
+    inImg       = new QPixmap();
 
     connect( imgProcess, SIGNAL(finished(int)), this, SLOT(imgProcFinishSlot(int)));
 }
@@ -38,7 +44,7 @@ void clscaffe::inImgSlot()
 
     // Call external exe to process detection and get result
     imgProcess->start( caffeBin+param, QIODevice::ReadWrite );
-    imgProcess->waitForFinished( 5000 );
+    imgProcess->waitForFinished( 3000 );
 }
 
 
