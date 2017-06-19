@@ -1,14 +1,10 @@
 #include "clscaffe.h"
 #include <QDebug>
 
-//const QString caffeBin = "../ai_ipc/3party/caffe/bin/classification.bin ";
-//const QString param = "../ai_ipc/3party/caffe/modelbin/deploy.prototxt ../ai_ipc/3party/caffe/modelbin/ajguard.caffemodel ../ai_ipc/3party/caffe/modelbin/mean.binaryproto ../ai_ipc/3party/caffe/modelbin/labels.txt ../ai_ipc/test/temp.jpg";
-
-
-const QString caffeBin = "../ai_ipc/3party/caffe/bin/classification.bin ";
+const QString caffeBin = "../ai_ipc/3party/caffe/bin_opencl/classification.bin ";
 const QString param = "../ai_ipc/3party/caffe/alexmodel/deploy.prototxt ../ai_ipc/3party/caffe/alexmodel/ajguard.caffemodel ../ai_ipc/3party/caffe/alexmodel/mean.binaryproto ../ai_ipc/3party/caffe/alexmodel/labels.txt ../ai_ipc/test/temp.jpg";
 
-const QString inImgPath = "../ai_ipc/test/test1000.jpg";
+const QString inImgPath = "../ai_ipc/test/test500.jpg";
 const QString tmpImgPath = "../ai_ipc/test/temp.jpg";
 
 clscaffe::clscaffe(QObject *parent) : QObject(parent)
