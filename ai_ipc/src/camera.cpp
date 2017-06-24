@@ -1,5 +1,6 @@
 
 #include <QDebug>
+#include <QFile>
 
 #include "camera.h"
 
@@ -23,6 +24,7 @@ void camera::initProcessSlot( void )
     counter100ms = 0;
     counter500ms = 0;
     counter1000ms = 0;
+    idx = 0;
 
     camTimer25ms = new QTimer();
     calTime = new QTime();
@@ -34,8 +36,8 @@ void camera::initProcessSlot( void )
 
     if( NULL != cam )
     {
-        cvSetCaptureProperty(cam, CV_CAP_PROP_FRAME_WIDTH, 1280);//设置图像属性 宽和高
-        cvSetCaptureProperty(cam, CV_CAP_PROP_FRAME_HEIGHT,1080);
+        cvSetCaptureProperty(cam, CV_CAP_PROP_FRAME_WIDTH, 256);//设置图像属性 宽和高
+        cvSetCaptureProperty(cam, CV_CAP_PROP_FRAME_HEIGHT,256);
 
         camTimer25ms->start( FPS_MS );
     }
@@ -90,10 +92,13 @@ void camera::camTimer25msSlot( void )
             counter500ms = 0;
         }
 
-        if( counter1000ms >= COUNT_3000MS )
+        if( counter1000ms >= COUNT_1000MS )
         {
+            idx++;
             //calTime->restart();
             cvSaveImage("../ai_ipc/test/test1000.jpg", img, 0);
+            QString newName = "../ai_ipc/test/hands_5_"+QString::number(idx)+".jpg";
+            QFile::rename("../ai_ipc/test/test1000.jpg", newName);
             //qDebug() << "save img time: " + QString::number( calTime->elapsed() );
 
             // Inform other process

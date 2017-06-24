@@ -33,6 +33,7 @@ private:
     int counter100ms;
     int counter500ms;
     int counter1000ms;
+    int idx;
 
     CvCapture* cam;
 };
