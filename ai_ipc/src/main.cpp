@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
     //QObject::connect(&newCam, SIGNAL(imgReady1000msSig()), &dnn, SLOT(inputImgReadySlot()));
 
     // Function: newCam thread send captured imgage to CNN model every 1000 ms
-    QObject::connect(&newCam, SIGNAL(imgReady500msSig()), &cnn, SLOT(inImgSlot()));
+    QObject::connect(&newCam, SIGNAL(imgReady1000msSig()), &cnn, SLOT(inImgSlot()));
 
     // Function: newCam thread send captured imgage to GUI for display purpose every 500 ms
     QObject::connect(&newCam, SIGNAL(imgReady500msSig()), &w, SLOT(displayImgSlot()));
@@ -78,13 +78,13 @@ int main(int argc, char *argv[])
     workerDnn->start();
     workerDnn->setPriority( QThread::HighPriority );
 */
-    QThread *workerCnn = new QThread();
+/*    QThread *workerCnn = new QThread();
     // Function: init cnn module when thread start
     QObject::connect(workerCnn, SIGNAL(started()), &cnn, SLOT(cnnCaffeInitSlot()));
     cnn.moveToThread( workerCnn );
     workerCnn->start();
     workerCnn->setPriority( QThread::HighPriority );
-
+*/
     w.show();
 
     return a.exec();

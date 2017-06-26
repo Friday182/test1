@@ -94,15 +94,21 @@ void camera::camTimer25msSlot( void )
 
         if( counter1000ms >= COUNT_1000MS )
         {
-            idx++;
+            if( idx > 0)
+            {
+                // Inform other process
+                emit imgReady1000msSig();
+                idx = 0;
+            }
+            else
+            {
+                idx++;
             //calTime->restart();
-            cvSaveImage("../ai_ipc/test/test1000.jpg", img, 0);
-            QString newName = "../ai_ipc/test/hands_5_"+QString::number(idx)+".jpg";
-            QFile::rename("../ai_ipc/test/test1000.jpg", newName);
+                cvSaveImage("../ai_ipc/test/test1000.jpg", img, 0);
+            //QString newName = "../ai_ipc/test/hands_5_"+QString::number(idx)+".jpg";
+            //QFile::rename("../ai_ipc/test/test1000.jpg", newName);
             //qDebug() << "save img time: " + QString::number( calTime->elapsed() );
-
-            // Inform other process
-            emit imgReady1000msSig();
+            }
 
             counter1000ms = 0;
         }
