@@ -32,14 +32,16 @@ void camera::initProcessSlot( void )
     // Function: Timer to trigger image capture periodically
     connect( camTimer25ms, SIGNAL(timeout()), this, SLOT(camTimer25msSlot()) );
 
-    cam = cvCaptureFromCAM(CV_CAP_ANY);     // open default camera
+    //cam = cvCaptureFromCAM(CV_CAP_ANY);     // open default camera
+    cam = new VideoCapture(CV_CAP_ANY);
 
-    if( NULL != cam )
+    if( cam->isOpened() )
     {
-        cvSetCaptureProperty(cam, CV_CAP_PROP_FRAME_WIDTH, 256);//设置图像属性 宽和高
-        cvSetCaptureProperty(cam, CV_CAP_PROP_FRAME_HEIGHT,256);
+        cam->set(CV_CAP_PROP_FRAME_WIDTH, 256);
+        cam->set(CV_CAP_PROP_FRAME_HEIGHT,256);
 
         camTimer25ms->start( FPS_MS );
+        qDebug() << "Open camera OK!";
     }
     else
     {
@@ -48,13 +50,12 @@ void camera::initProcessSlot( void )
         // something wrong
         emit errorIndicator();
     }
+
 }
 
 
 void camera::camTimer25msSlot( void )
 {
-    IplImage *img = 0;
-
     counter100ms++;
     counter500ms++;
     counter1000ms++;
@@ -64,17 +65,21 @@ void camera::camTimer25msSlot( void )
      * Pass the img to CNN may save the time because avoid file write/read
      * Run on my HP Z15 laptop, with ubuntu 14, QT5.8 */
     //calTime->restart();
-    img = cvQueryFrame(cam);
+    static Mat img;
+    *cam >> img;           // get a new frame from camera
+
     //qDebug() << "read img time: " + QString::number( calTime->elapsed() );
-    if(NULL != img)
+    if(!img.empty())
     {
+        //cv::cvtColor(img, img, CV_BGR2RGB);
+        //cv::flip(img, img, 1);
         //cvShowImage("Test", img);
-        cvSaveImage("../ai_ipc/test/test.jpg", img, 0);
+        imwrite("../ai_ipc/test/test.jpg", img);
         emit imgReady25msSig();
 
         if( counter100ms >= COUNT_100MS )
         {
-            cvSaveImage("../ai_ipc/test/test100.jpg", img, 0);
+            imwrite("../ai_ipc/test/test100.jpg", img);
 
             // Inform other process
             emit imgReady100msSig();
@@ -84,32 +89,27 @@ void camera::camTimer25msSlot( void )
 
         if( counter500ms >= COUNT_500MS )
         {
-            cvSaveImage("../ai_ipc/test/test500.jpg", img, 0);
+            imwrite("../ai_ipc/test/test500.jpg", img);
 
             // Inform other process
             emit imgReady500msSig();
+            //QImage qimg((uchar*)img.data, img.cols, img.rows, QImage::Format_RGB32);
+            //emit imgReadySig(img);
 
             counter500ms = 0;
         }
 
         if( counter1000ms >= COUNT_1000MS )
         {
-            if( idx > 0)
-            {
-                // Inform other process
-                emit imgReady1000msSig();
-                idx = 0;
-            }
-            else
-            {
-                idx++;
-            //calTime->restart();
-                cvSaveImage("../ai_ipc/test/test1000.jpg", img, 0);
-            //QString newName = "../ai_ipc/test/hands_5_"+QString::number(idx)+".jpg";
-            //QFile::rename("../ai_ipc/test/test1000.jpg", newName);
-            //qDebug() << "save img time: " + QString::number( calTime->elapsed() );
-            }
+            imwrite("../ai_ipc/test/test1000.jpg", img);
 
+            // Inform other process
+            emit imgReady1000msSig();
+            cas.casGetImgSlot(img);
+            //emit imgReadySig(&img);
+
+            //calTime->restart();
+            //qDebug() << "save img time: " + QString::number( calTime->elapsed() );
             counter1000ms = 0;
         }
 

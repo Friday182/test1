@@ -6,12 +6,14 @@
  * ********************************************************************************/
 #include <QApplication>
 #include <QThread>
+#include <QMetaType>
 
 #include "mainwindow.h"
 //#include "classifier.h"
 #include "camera.h"
 #include "clsdnn.h"
 #include "clscaffe.h"
+#include "cascade.h"
 
 int main(int argc, char *argv[])
 {
@@ -22,6 +24,7 @@ int main(int argc, char *argv[])
     //classifier      cls;
     clsdnn          dnn;
     clscaffe        cnn;
+    cascade         cas;
 
     QApplication::addLibraryPath("./imageformats");
 
@@ -40,6 +43,8 @@ int main(int argc, char *argv[])
     // Function: newCam thread send captured imgage to GUI for display purpose every 500 ms
     QObject::connect(&newCam, SIGNAL(imgReady500msSig()), &w, SLOT(displayImgSlot()));
 
+    qRegisterMetaType< cv::Mat >("Mat");
+    //QObject::connect(&newCam, SIGNAL(imgReadySig(Mat*)), &cas, SLOT(casGetImgSlot(Mat*)));
     // Function: newCam thread send image to RTSP server every 25 ms
     //QObject::connect(&newCam, SIGNAL(imgReady25msSig()), &w, SLOT(classify()));
 
@@ -78,7 +83,10 @@ int main(int argc, char *argv[])
     workerDnn->start();
     workerDnn->setPriority( QThread::HighPriority );
 */
-/*    QThread *workerCnn = new QThread();
+/* Because we need read console output in cnn, so cnn must be in the main appliction, not in a thread!
+ * TODO: call caffe API from cnn direct, don't need console command. and put in a thread.
+ * TODO: If put caffe in a container, don't need thread at all. and don't need QT cause will using SENT interfaces.
+ *     QThread *workerCnn = new QThread();
     // Function: init cnn module when thread start
     QObject::connect(workerCnn, SIGNAL(started()), &cnn, SLOT(cnnCaffeInitSlot()));
     cnn.moveToThread( workerCnn );

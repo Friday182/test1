@@ -33,12 +33,14 @@ SOURCES += src/main.cpp\
         src/mainwindow.cpp \
     src/camera.cpp \
     src/clsdnn.cpp \
-    src/clscaffe.cpp
+    src/clscaffe.cpp \
+    src/cascade.cpp
 
 HEADERS  += src/mainwindow.h \
     src/camera.h \
     src/clsdnn.h \
-    src/clscaffe.h
+    src/clscaffe.h \
+    src/cascade.h
 
 FORMS    += src/mainwindow.ui
 

@@ -5,9 +5,13 @@
 #include <QTimer>
 #include <QTime>
 
-#include "cv.h"
-#include "cxcore.h"
-#include "highgui.h"
+#include "videoio.hpp"
+#include <opencv2/core.hpp>
+#include <opencv2/highgui.hpp>
+
+#include "cascade.h"
+
+using namespace cv;
 
 class camera : public QObject
 {
@@ -20,6 +24,7 @@ signals:
     void imgReady100msSig( void );
     void imgReady500msSig( void );
     void imgReady1000msSig( void );
+    void imgReadySig( Mat* );
 
     void errorIndicator( void );
 public slots:
@@ -35,7 +40,8 @@ private:
     int counter1000ms;
     int idx;
 
-    CvCapture* cam;
+    cv::VideoCapture* cam;
+    cascade cas;
 };
 
 #endif // CAMERA_H

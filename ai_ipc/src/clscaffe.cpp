@@ -3,10 +3,10 @@
 #include <QThread>
 
 //const QString caffeBin = "../ai_ipc/3party/caffe/bin_cpu/classification.bin ";
-//const QString param = "../ai_ipc/3party/caffe/snmodel_hands_2/deploy.prototxt ../ai_ipc/3party/caffe/snmodel_hands_2/SN_hands_2.caffemodel ../ai_ipc/3party/caffe/snmodel_hands_2/mean.binaryproto ../ai_ipc/3party/caffe/snmodel_hands_2/labels.txt ../ai_ipc/test/test1000.jpg";
+//const QString param = "../ai_ipc/3party/caffe/snmodel_hands_3/deploy.prototxt ../ai_ipc/3party/caffe/snmodel_hands_3/SN_hands_3.caffemodel ../ai_ipc/3party/caffe/snmodel_hands_3/mean.binaryproto ../ai_ipc/3party/caffe/snmodel_hands_3/labels.txt ../ai_ipc/test/test1000.jpg";
 
 const QString caffeBin = "/home/phoenix/Desktop/AiHome/sw/test1/ai_ipc/3party/caffe/bin_cpu/classification.bin ";
-const QString param = "/home/phoenix/Desktop/AiHome/sw/test1/ai_ipc/3party/caffe/snmodel_hands_2/deploy.prototxt /home/phoenix/Desktop/AiHome/sw/test1/ai_ipc/3party/caffe/snmodel_hands_2/SN_hands_2.caffemodel /home/phoenix/Desktop/AiHome/sw/test1/ai_ipc/3party/caffe/snmodel_hands_2/mean.binaryproto /home/phoenix/Desktop/AiHome/sw/test1/ai_ipc/3party/caffe/snmodel_hands_2/labels.txt /home/phoenix/Desktop/AiHome/sw/test1/ai_ipc/test/test1000.jpg";
+const QString param = "/home/phoenix/Desktop/AiHome/sw/test1/ai_ipc/3party/caffe/snmodel_hands_3/deploy.prototxt /home/phoenix/Desktop/AiHome/sw/test1/ai_ipc/3party/caffe/snmodel_hands_3/SN_hands_3.caffemodel /home/phoenix/Desktop/AiHome/sw/test1/ai_ipc/3party/caffe/snmodel_hands_3/mean.binaryproto /home/phoenix/Desktop/AiHome/sw/test1/ai_ipc/3party/caffe/snmodel_hands_3/labels.txt /home/phoenix/Desktop/AiHome/sw/test1/ai_ipc/test/test1000.jpg";
 
 const QString inImgPath = "../ai_ipc/test/test1000.jpg";
 const QString tmpImgPath = "../ai_ipc/test/temp.jpg";
