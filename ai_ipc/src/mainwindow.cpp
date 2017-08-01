@@ -61,5 +61,5 @@ void MainWindow::displayImgSlot()
 void MainWindow::getPredictResultSlot( int code, int percent )
 {
     // Display result of predict
-    ui->label_info->setText( "<h4>此图片： " + QString::number( code ) + "Percent:" + QString::number( percent ) + "</h4>");
+    ui->label_info->setText( "<h4>Predict time： " + QString::number( code ) + "ms" + "</h4>");
 }

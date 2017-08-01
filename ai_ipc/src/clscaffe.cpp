@@ -66,7 +66,7 @@ void clscaffe::imgProcFinishSlot( int code )
     qDebug() << "pos:" + QString::number(pos);
     qDebug() << "pos1:" + QString::number(pos1);
 
-    emit cnnResultSig(pos, pos1);
+    emit cnnResultSig(calTime->elapsed(), calTime->elapsed());
 
 
     // Display how long to process this image
